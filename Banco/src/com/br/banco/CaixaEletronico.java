@@ -51,12 +51,10 @@ public class CaixaEletronico {
 							}
 						}
 						else {
-							System.out.println("a pessoa não possui divida");
 							destino.setSaldo(valorBackup + destino.getSaldo());
 						}
 						
 					}
-						System.out.println("valor da variavel valor: " + valor);
 					if (valor > 0) {
 						// seta as operações
 						origem.getOperacoes().add(new Operacao(valor, false));
