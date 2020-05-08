@@ -17,26 +17,34 @@ public class Main {
 		Scanner scan = new Scanner(System.in);
 		int input = 1;
 		String nome;
-		int tipoConta;
+		int tipoConta = 0;
 		double saldo = 0;
-		String banco;
+		String banco = null;
 		double limite = 0;
 		Listar listar = new Listar();
 		List<Conta> contasList = new ArrayList<Conta>();
 
+		// faz com que o menu fique em loop até o input seja = 0, ela é inicializada em
+		// 1
 		while (input != 0) {
+			// puxa o metodo que monta o menu de uma classe estática
 			Menu.montarMenuPrincipal();
 			input = scan.nextInt();
 
+			// faz o cadastro do usuário
 			if (input == 1) {
 				System.out.println("Digite seu nome: ");
 				nome = scan.next();
 
 				System.out.println("tipo de conta deseja cadastrar: [0: conta corrente]/[1: poupança] ");
-				tipoConta = scan.nextInt();
-				while (tipoConta < 0 || tipoConta > 1) {
-					System.out.println("Digite apenas 0 ou 1");
+				try {
 					tipoConta = scan.nextInt();
+					while (tipoConta < 0 || tipoConta > 1) {
+						System.out.println("Digite apenas 0 ou 1");
+						tipoConta = scan.nextInt();
+					}
+				} catch (Exception e) {
+					System.out.println(e);
 				}
 
 				System.out.println("saldo da conta: ");
@@ -47,20 +55,28 @@ public class Main {
 						saldo = scan.nextDouble();
 					}
 				} catch (Exception e) {
-					System.out.println("erro");
-					saldo = scan.nextDouble();
+					System.out.println(e);
 				}
 				System.out.println("nome da agência: ");
-				banco = scan.next();
+				try {
+					banco = scan.next();
+				} catch (Exception e) {
+					System.out.println(e);
+				}
 
 				if (tipoConta == 0) {
 					System.out.println("limite da conta: ");
-					limite = scan.nextDouble();
+					try {
+						limite = scan.nextDouble();
+					} catch (Exception e) {
+						System.out.println(e);
+					}
 				}
 
+				// aqui é onde é definido o tipo de objeto que sairá do metodo
 				if (tipoConta == 0) {
 					ContaCorrente c1 = new ContaCorrente(0, nome, tipoConta, saldo, banco, limite);
-					System.out.println(c1.getLimite());
+					System.out.println("Para realizar transações utilize o id = " + c1.getId());
 					contasList.add(c1);
 				} else {
 					ContaPoupanca c1 = new ContaPoupanca(0, nome, tipoConta, saldo, banco);
@@ -68,7 +84,9 @@ public class Main {
 				}
 			}
 
+			// caixa eletronico
 			if (input == 2) {
+				// verifica há alguma conta cadastrada
 				if (contasList.size() > 0) {
 					int entrada = 1;
 					while (entrada != 0) {
@@ -77,16 +95,21 @@ public class Main {
 
 						if (entrada == 1) {
 							System.out.println("digite o id da conta: ");
+							
 							int id = scan.nextInt();
 
 							System.out.println(
 									"qual valor deseja pagar? \nsaldo disponivel: " + contasList.get(id).getSaldo());
+							
+							// verifica se contalista é uma instancia de conta corrente. caso verdadeiro ele pega o limite
+							
 							if (contasList.get(id) instanceof ContaCorrente) {
 								System.out.println(
-										"\nlimite disponivel: " + ((ContaCorrente) contasList.get(id)).getLimite());
+										"limite disponivel: " + ((ContaCorrente) contasList.get(id)).getLimite());
 							}
 							float valor = scan.nextFloat();
 
+							// chama o metodo pagar de caixa eletronico passando o objeto escolhido pelo usuario e valor 
 							CaixaEletronico.pagar(contasList.get(id), valor);
 
 						}
@@ -98,7 +121,7 @@ public class Main {
 							System.out.println("digite o id da segunda conta: ");
 							int id2 = scan.nextInt();
 
-							System.out.println("qual valor deseja trasferir? \nsaldo disponivel: "
+							System.out.println("qual valor deseja transferir? \nsaldo disponivel: "
 									+ contasList.get(id1).getSaldo());
 							if (contasList.get(id1) instanceof ContaCorrente) {
 								System.out.println(
@@ -115,6 +138,7 @@ public class Main {
 			}
 
 			if (input == 3) {
+				// chama o metodo que lista as contas passando a lista de contas
 				listar.listarTodasAsContasComOperacoes(contasList);
 			}
 
@@ -123,8 +147,11 @@ public class Main {
 			}
 
 			if (input == 5) {
+				// chama um metodo que verifica a instancia de correntes e retorna na lista apenas elas
 				List<ContaCorrente> contasCorrenteList = separaContasCorrente(contasList);
 
+				
+				// após filtrar faz o sout das contas
 				listar.listarContasCorrentes(contasCorrenteList);
 			}
 
@@ -134,6 +161,8 @@ public class Main {
 				listar.listarContasPoupanca(contasPoupancaList);
 			}
 
+			
+			// meotodo que gera contas para teste
 			if (input == 7) {
 				ContaCorrente conta1 = new ContaCorrente(0, "teste", 0, 500, "itau", 500);
 				ContaPoupanca conta2 = new ContaPoupanca(0, "teste2", 1, 500, "hscb");
@@ -148,24 +177,32 @@ public class Main {
 
 	}
 
+	// metodo para filtrar contas corrente
 	public static List<ContaCorrente> separaContasCorrente(List<Conta> contasList) {
+		// instancia a lista que vai ser usada como retorno do metodo
 		List<ContaCorrente> contasCorrente = new ArrayList<>();
-
-		for (ContaCorrente conta : contasCorrente) {
+		
+		// percorre a lista de contas 
+		for (Conta conta : contasList) {
+			// sempre que o for rodar verifica se conta é do tipo conta corrente e então adiciona na lista de contas
+			// fazendo um cast para o tipo contaCorrente
 			if (conta instanceof ContaCorrente) {
-				contasCorrente.add(conta);
+				contasCorrente.add((ContaCorrente) conta);
 			}
 		}
-
+		
+		// após filtrar retorna a lista
 		return contasCorrente;
 	}
-
+	
+	
+	// metodo para filtrar contas poupança
 	public static List<ContaPoupanca> separaContasPoupanca(List<Conta> contasList) {
 		List<ContaPoupanca> contasPoupanca = new ArrayList<>();
 
-		for (ContaPoupanca conta : contasPoupanca) {
+		for (Conta conta : contasList) {
 			if (conta instanceof ContaPoupanca) {
-				contasPoupanca.add(conta);
+				contasPoupanca.add((ContaPoupanca) conta);
 			}
 		}
 

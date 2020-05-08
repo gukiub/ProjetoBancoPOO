@@ -5,7 +5,7 @@ public class Menu {
 		System.out.println("===========================================================");
 		System.out.println("Seja bem vindo ao seu banco");
 		System.out.println("Selecione as opções abaixo para realizar uma operação: ");
-		System.out.println("1 - Cadastro de conta corrente");
+		System.out.println("1 - Cadastro de conta");
 		System.out.println("2 - Caixa eletronico");
 		System.out.println("3 - Lista todas as contas com Operações");
 		System.out.println("4 - Lista todas as contas");

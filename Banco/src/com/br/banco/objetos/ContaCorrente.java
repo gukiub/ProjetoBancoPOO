@@ -1,7 +1,5 @@
 package com.br.banco.objetos;
 
-import java.util.List;
-
 public class ContaCorrente extends Conta{
 	
 	private double limite;

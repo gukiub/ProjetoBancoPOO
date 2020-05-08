@@ -13,13 +13,13 @@ public abstract class Conta {
 	protected List<Conta> contasList;
 	protected double limite;
 
-	protected static int sequencia = 0;
+	protected static int sequencia = 0; // variavel iteravel para incremento do id
 
 	protected int id;
 
 	public Conta(int id, String nome, int tipoConta, double saldo, String banco) {
 		super();
-		this.id = sequencia++;
+		this.id = sequencia++; // metodo de incremento do id
 		this.nome = nome;
 		TipoConta = tipoConta;
 		this.saldo = saldo;
