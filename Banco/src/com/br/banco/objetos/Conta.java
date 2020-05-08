@@ -13,7 +13,7 @@ public abstract class Conta {
 	protected List<Conta> contasList;
 	protected double limite;
 
-	protected static int sequencia = 0; // variavel iteravel para incremento do id
+	protected static int sequencia = 1; // variavel iteravel para incremento do id
 
 	protected int id;
 
