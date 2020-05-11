@@ -98,42 +98,49 @@ public class Main {
 						if (entrada == 1) {
 							System.out.println("digite o id da conta: ");
 
-							int id = scan.nextInt() - 1;
+							try {
+								int id = scan.nextInt() - 1;
 
-							System.out.println(
-									"qual valor deseja pagar? \nsaldo disponivel: " + contasList.get(id).getSaldo());
+								System.out.println("qual valor deseja pagar? \nsaldo disponivel: "
+										+ contasList.get(id).getSaldo());
 
-							// verifica se contalista é uma instancia de conta corrente. caso verdadeiro ele
-							// pega o limite
+								// verifica se contalista é uma instancia de conta corrente. caso verdadeiro ele
+								// pega o limite
 
-							if (contasList.get(id) instanceof ContaCorrente) {
-								System.out.println(
-										"limite disponivel: " + ((ContaCorrente) contasList.get(id)).getLimite());
+								if (contasList.get(id) instanceof ContaCorrente) {
+									System.out.println(
+											"limite disponivel: " + ((ContaCorrente) contasList.get(id)).getLimite());
+								}
+								float valor = scan.nextFloat();
+
+								// chama o metodo pagar de caixa eletronico passando o objeto escolhido pelo
+								// usuario e valor
+								CaixaEletronico.pagar(contasList.get(id), valor);
+							} catch (Exception e) {
+								System.out.println("id inválido, digite um id valido");
 							}
-							float valor = scan.nextFloat();
-
-							// chama o metodo pagar de caixa eletronico passando o objeto escolhido pelo
-							// usuario e valor
-							CaixaEletronico.pagar(contasList.get(id), valor);
-
 						}
 
 						if (entrada == 2) {
-							System.out.println("digite o id da primeira conta: ");
-							int id1 = scan.nextInt() - 1;
+							try {
+								System.out.println("digite o id da primeira conta: ");
+								int id1 = scan.nextInt() - 1;
 
-							System.out.println("digite o id da segunda conta: ");
-							int id2 = scan.nextInt() - 1;
+								System.out.println("digite o id da segunda conta: ");
+								int id2 = scan.nextInt() - 1;
 
-							System.out.println("qual valor deseja transferir? \nsaldo disponivel: "
-									+ contasList.get(id1).getSaldo());
-							if (contasList.get(id1) instanceof ContaCorrente) {
-								System.out.println(
-										"limite disponivel: " + ((ContaCorrente) contasList.get(id1)).getLimite());
+								System.out.println("qual valor deseja transferir? \nsaldo disponivel: "
+										+ contasList.get(id1).getSaldo());
+								if (contasList.get(id1) instanceof ContaCorrente) {
+									System.out.println(
+											"limite disponivel: " + ((ContaCorrente) contasList.get(id1)).getLimite());
+								}
+								float valor = scan.nextFloat();
+
+								CaixaEletronico.pagar(contasList.get(id1), contasList.get(id2), valor);
+							} catch (Exception e) {
+								System.out.println("id invalido, digite um id valido");
 							}
-							float valor = scan.nextFloat();
-
-							CaixaEletronico.pagar(contasList.get(id1), contasList.get(id2), valor);
 						}
 					}
 				} else {
