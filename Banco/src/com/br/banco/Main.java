@@ -114,7 +114,9 @@ public class Main {
 
 								// chama o metodo pagar de caixa eletronico passando o objeto escolhido pelo
 								// usuario e valor
-								CaixaEletronico.pagar(contasList.get(id), valor);
+								if(valor > 0) {
+									CaixaEletronico.pagar(contasList.get(id), valor);
+								}
 							} catch (Exception e) {
 								System.out.println("id inválido, digite um id valido");
 							}
@@ -135,8 +137,9 @@ public class Main {
 											"limite disponivel: " + ((ContaCorrente) contasList.get(id1)).getLimite());
 								}
 								float valor = scan.nextFloat();
-
-								CaixaEletronico.pagar(contasList.get(id1), contasList.get(id2), valor);
+								if(valor > 0) {
+									CaixaEletronico.pagar(contasList.get(id1), contasList.get(id2), valor);
+								}
 							} catch (Exception e) {
 								System.out.println("id invalido, digite um id valido");
 							}
