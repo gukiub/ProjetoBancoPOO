@@ -78,7 +78,6 @@ public class Main {
 				if (tipoConta == 0) {
 					ContaCorrente c1 = new ContaCorrente(0, nome, tipoConta, saldo, banco, limite);
 					System.out.println("Para realizar transações utilize o id = " + c1.getId());
-					c1.setLimiteTotal(limite);
 					contasList.add(c1);
 				} else {
 					ContaPoupanca c1 = new ContaPoupanca(0, nome, tipoConta, saldo, banco);
@@ -182,7 +181,6 @@ public class Main {
 				limiteAleatorio = rn.nextInt(1000);
 
 				ContaCorrente conta1 = new ContaCorrente(0, "teste", 0, saldoAleatorio, "itau", limiteAleatorio);
-				conta1.setLimiteTotal(conta1.getLimite());
 
 				saldoAleatorio = rn.nextInt(1000);
 				limiteAleatorio = rn.nextInt(1000);
@@ -197,7 +195,6 @@ public class Main {
 				saldoAleatorio = rn.nextInt(1000);
 				limiteAleatorio = rn.nextInt(1000);
 				ContaCorrente conta4 = new ContaCorrente(0, "teste4", 0, saldoAleatorio, "nubank", limiteAleatorio);
-				conta4.setLimiteTotal(conta4.getLimite());
 				contasList.add(conta1);
 				contasList.add(conta2);
 				contasList.add(conta3);
@@ -238,4 +235,5 @@ public class Main {
 
 		return contasPoupanca;
 	}
+
 }
